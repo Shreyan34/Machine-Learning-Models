@@ -1,32 +1,40 @@
-#importing modules
-from matplotlib import pyplot as plt
-import pandas as pd
-from sklearn.linear_model import LinearRegression
+#main machine learning model:
+prediction_year = int(input('Prediction Year: '))#taking the input of the year that is to be predicted
 
-#the machine learning model
-prediction_year = int(input('Enter the year of prediction:'))
-round(prediction_year)
-data = pd.read_csv('Seats VS Years (CSV).csv')
+data = pd.read_csv('seats_vs_years(CSV).csv') #reading the data
 
-#the bar graph
-plt.title('The Model So Far')
-plt.plot(data['Years'], data['Seats'], color='red')
-plt.bar(data['Years'], data['Seats'], color='orange')
+#making the graph
+plt.scatter(data['Years'], data['Seats'], color = 'red') 
+plt.plot(data['Years'], data['Seats'], color = 'orange')
+plt.title('The Model So Far...')
+plt.ylabel('Seats Won')
+plt.xlabel('Loksabha Election Years')
 plt.grid()
-plt.ylabel('No. of seats won')
-plt.xlabel('Election Years')
 plt.show()
+
+#the machine-learning model
+model = LinearRegression()
+model.fit(data[['Years']], data[['Seats']])
+prediction = model.predict([[prediction_year]])
+
+#showing the data
 print(data)
 print('\n')
 
-model = LinearRegression()
-model.fit(data[['Years']], data[['Seats']])
+#creating a divider
+print('---------------------------------------------------------------------------')
+print('/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/')
+print('---------------------------------------------------------------------------')
 
-if prediction_year < 2021:
-    print('In the year of',prediction_year, 'BJP won (prediction):', model.predict([[prediction_year]]), 'seats.')
+#if-else statements
+if prediction_year == 2021:
+    print('\n')
+    print('In the year of', prediction_year,',', 'BJP is going to win (parliamentary):', prediction, 'seats')
 elif prediction_year > 2021:
-    print('In the year of',prediction_year, 'BJP is going to win:', model.predict([[prediction_year]]), 'seats.')
-elif prediction_year == 2021:
-    print('In the year of',prediction_year, 'BJP is going to win:', model.predict([[prediction_year]]), 'seats.')
+    print('\n')
+    print('In the year of', prediction_year,',',  'BJP is going to win (prediction):', prediction, 'seats')
+elif prediction_year < 2021:
+    print('\n')
+    print('In the year of', prediction_year,',','BJP won (prediction):', prediction, 'seats')
 else:
-    print(model.predict([[prediction_year]]))
+    print('Invalid Inputs! Something Went Wrong!')
