@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 
-#main machine learning bjpModel:
+#main machine learning model:
 
 
 prediction_year = int(input('Prediction Year: '))#taking the input of the year that is to be predicted
